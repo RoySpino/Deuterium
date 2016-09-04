@@ -12,6 +12,8 @@ namespace Deuterium
     class Plane
     {
         List<double> virt = new List<double>();
+        int[] col_ = new int[3];
+        double x, y, z, rx, ry, rz;
 
         public Plane()
         {
@@ -48,6 +50,59 @@ namespace Deuterium
                                          lr.x, lr.y, lr.z,
                                          ur.x, ur.y, ur.z,
                                          ul.x, ul.y, ul.z });
+        }
+
+        // /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        void draw()
+        {
+            GL.PushMatrix();
+
+
+            GL.EnableClientState(ArrayCap.VertexArray);   // Enable vertex arrays
+            GL.EnableClientState(ArrayCap.NormalArray);   // Enable normal arrays
+                                                          //glFrontFace(GL_CCW);
+
+            GL.Color3(Color.FromArgb(col_[0], col_[1], col_[2]));
+            GL.Translate(x, y, z);
+            GL.Rotate(rx, 1.0f, .0f, .0f);      // Rotate On The X axis 
+            GL.Rotate(ry, .0f, 1.0f, .0f);      // Rotate On The Y axis 
+            GL.Rotate(rz, .0f, .0f, 1.0f);      // Rotate On The Z axis 
+
+            GL.VertexPointer(3, VertexPointerType.Double, 0, virt.ToArray());
+            // Normal pointer to normal array
+            GL.NormalPointer(NormalPointerType.Double, 0, virt.ToArray());
+            // setup Color
+            //glColorPointer(3, GL_UNSIGNED_BYTE, 0, &col[0]);
+            // Draw the triangles
+            GL.DrawArrays(BeginMode.Triangles, 0, 2);
+
+            GL.DisableClientState(ArrayCap.VertexArray);  // Disable vertex arrays
+            GL.DisableClientState(ArrayCap.NormalArray);  // Disable normal arrays
+
+            GL.PopMatrix();
+        }
+
+        // /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public void rot(double x, double y, double z)
+        {
+            rx = x;
+            ry = y;
+            rz = z;
+        }
+
+        // /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public void loc(double x, double y, double z)
+        {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+        }
+        // /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        void setColor(int R, int G, int B)
+        {
+            col_[0] = R % 256;
+            col_[1] = G % 256;
+            col_[2] = B % 256;
         }
     }
 }
