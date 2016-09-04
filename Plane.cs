@@ -18,7 +18,8 @@ namespace Deuterium
         public Plane()
         {
             virt.AddRange(new double[] { 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0 });
-
+            x = y = z = 0;
+            rx = ry = rz = 0;
         }
 
         // /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,7 +54,7 @@ namespace Deuterium
         }
 
         // /////////////////////////////////////////////////////////////////////////////////////////////////////////
-        void draw()
+        public void draw()
         {
             GL.PushMatrix();
 
@@ -98,7 +99,7 @@ namespace Deuterium
             this.z = z;
         }
         // /////////////////////////////////////////////////////////////////////////////////////////////////////////
-        void setColor(int R, int G, int B)
+        public void setColor(int R, int G, int B)
         {
             col_[0] = R % 256;
             col_[1] = G % 256;
