@@ -14,7 +14,7 @@ namespace Deuterium
         double height, width, x, y, z,
             rx, ry, rz,
             PI = 3.141592653589793238462643;
-        int[] col_;
+        int[] col_ = new int[3];
         List<double> virt = new List<double>();
         List<double> nor = new List<double>();
         List<Vec> v = new List<Vec>();
@@ -24,7 +24,7 @@ namespace Deuterium
             height = 1;
             width = 1;
             resize(height, width);
-            col_[0] = col_[1] = col_[2] = 0;
+            col_[0] = col_[1] = col_[2] = 100;
             x = y = z = 0;
         }
 
@@ -255,8 +255,9 @@ namespace Deuterium
             v.Add(tmp);
         }
         // //////////////////////////////////////////////////////////////////////////||////////////////////
-        void draw()
+        public void draw()
         {
+            GL.LoadIdentity();
             GL.PushMatrix();
 
 
@@ -270,7 +271,7 @@ namespace Deuterium
             GL.Rotate(ry, .0f, 1.0f, .0f);      // Rotate On The Y axis 
             GL.Rotate(rz, .0f, .0f, 1.0f);      // Rotate On The Z axis 
 
-            GL.VertexPointer(3,VertexPointerType.Double, 0, virt.ToArray());
+            GL.VertexPointer(3, VertexPointerType.Double, 0, virt.ToArray());
             // Normal pointer to normal array
             GL.NormalPointer(NormalPointerType.Double, 0, virt.ToArray());
             // setup Color
@@ -284,18 +285,24 @@ namespace Deuterium
             GL.PopMatrix();
         }
         // ///////////////////////////////////////////////////////////////////////////////////////////////
-        void setColor(int R, int G, int B)
+        public void setColor(int R, int G, int B)
         {
             col_[0] = R;// / 255.0;
             col_[1] = G;// / 255.0;
             col_[2] = B;// / 255.0;
         }
         // ///////////////////////////////////////////////////////////////////////////////////////////////
-        void rot(double x, double y, double z)
+        public void rot(double x, double y, double z)
         {
             rx = x;
             ry = y; //(y * PI) / 180;
             rz = z; //(z * PI) / 180;
+        }
+        public void loc(double x, double y, double z)
+        {
+            this.x = x;
+            this.y = y;
+            this.z = z;
         }
     }
 }
